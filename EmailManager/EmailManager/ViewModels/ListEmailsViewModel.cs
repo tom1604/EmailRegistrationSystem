@@ -1,16 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using EmailManager.Models;
 
 namespace EmailManager.ViewModels
 {
-    public class ListEmailsViewModel
+    public class ListEmailsViewModel: INotifyPropertyChanged
     {
         public ObservableCollection<Email> Emails { get; set; }
+
+        private Email selectedEmail;
+
+        public Email SelectedEmail
+        {
+            get { return selectedEmail; }
+
+            set
+            {
+                selectedEmail = value;
+                OnPropertyChanged("SelectedEmail");
+            }
+        }
 
         public ListEmailsViewModel()
         {
@@ -56,6 +71,12 @@ namespace EmailManager.ViewModels
                     },
                 },
             };
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string prop = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmailManager"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -11,7 +12,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="0.5*" />
         </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" ItemsSource="{Binding Emails}">
+        <ListBox Grid.Column="0" ItemsSource="{Binding Emails}" SelectedItem="{Binding SelectedEmail}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="5">
@@ -23,6 +24,34 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-
+        <StackPanel Grid.Column="1" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="244" DataContext="{Binding SelectedEmail}">
+            <TextBlock FontSize="18" Text="{Binding Path=Subtitle, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="{Binding Path=SenderEmail, UpdateSourceTrigger=PropertyChanged}" />
+            <ListView ItemsSource="{Binding Recipients, UpdateSourceTrigger=PropertyChanged}" 
+                      IsHitTestVisible="False"
+                      Background="Transparent" 
+                      BorderThickness="0" Height="40"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Margin="-5,-10,0,0">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Margin="0"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock>
+                                <Run Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Run Text=";"/>
+                            </TextBlock>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <TextBlock FontSize="15" Text="{Binding Path=EmailBody, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Text="{Binding Path=RegistrationDate, UpdateSourceTrigger=PropertyChanged}" />
+        </StackPanel>
     </Grid>
 </Window>
