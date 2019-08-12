@@ -5,53 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmailManager"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="0.5*" />
-        </Grid.ColumnDefinitions>
-        <ListBox Grid.Column="0" ItemsSource="{Binding Emails}" SelectedItem="{Binding SelectedEmail}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="5">
-                        <TextBlock FontSize="18" Text="{Binding Path=Subtitle}" />
-                        <TextBlock Text="{Binding Path=SenderEmail}" />
-                        <TextBlock Text="{Binding Path=RegistrationDate}" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d" Height="600" Width="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Window.Resources>
+        <Storyboard x:Key="MenuOpen">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="50"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="MenuClose">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="50"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
 
-        <StackPanel Grid.Column="1" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="244" DataContext="{Binding SelectedEmail}">
-            <TextBlock FontSize="18" Text="{Binding Path=Subtitle, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="{Binding Path=SenderEmail, UpdateSourceTrigger=PropertyChanged}" />
-            <ListView ItemsSource="{Binding Recipients, UpdateSourceTrigger=PropertyChanged}" 
-                      IsHitTestVisible="False"
-                      Background="Transparent" 
-                      BorderThickness="0" Height="40"
-                      HorizontalAlignment="Left"
-                      VerticalAlignment="Top"
-                      Margin="-5,-10,0,0">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="0"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock>
-                                <Run Text="{Binding Path=Email, UpdateSourceTrigger=PropertyChanged}"/>
-                                <Run Text=";"/>
-                            </TextBlock>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <TextBlock FontSize="15" Text="{Binding Path=EmailBody, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBlock Text="{Binding Path=RegistrationDate, UpdateSourceTrigger=PropertyChanged}" />
-        </StackPanel>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuOpen}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid Background="LightGray">
+        <Grid x:Name="gridTopPanel" VerticalAlignment="Top" Height="20" Background="#FF3F3F46" MouseDown="GridTopPanel_MouseDown">
+            <Button x:Name="btnCloseWindow" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Background="#FF2D2D3B" Click="BtnCloseWindow_Click" BorderBrush="#FF757E85" Foreground="White">
+                <materialDesign:PackIcon Kind="Close" Foreground="Red" Width="15" Height="15" VerticalAlignment="Center" Margin="-13"/>
+            </Button>
+            <Button x:Name="btnMinimizeWindow" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Background="#FF2D2D3B"  BorderBrush="#FF757E85" Foreground="White" Margin="0 0 25 0" Click="BtnMinimizeWindow_Click">
+                <materialDesign:PackIcon Kind="WindowMinimize" Foreground="White" Width="15" Height="15" VerticalAlignment="Center" Margin="-13"/>
+            </Button>
+        </Grid>
+        <Grid Height="60" VerticalAlignment="Top" Margin="0 20" Background="#FF2D2725">
+            <TextBlock Text="Email Manager" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
+        </Grid>
+        <Grid Width="50" HorizontalAlignment="Left" Background="#FF2D2D3B" x:Name="GridMenu">
+            <StackPanel>
+                <Grid Height="120" Background="#FF2D2D3B" Margin="0 20 0 0">
+                    <Button x:Name="btnCloseMenu" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60" Height="60" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="Collapsed" Click="BtnCloseMenu_Click">
+                        <materialDesign:PackIcon Foreground="White" Kind="ArrowLeft" Width="25" Height="25"/>
+                    </Button>
+                    <Button x:Name="btnOpenMenu" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60" Height="60" BorderBrush="{x:Null}" Background="{x:Null}" Click="BtnOpenMenu_Click">
+                        <materialDesign:PackIcon Foreground="White" Kind="Menu" Width="25" Height="25" Margin="5"/>
+                    </Button>
+                </Grid>
+                <ListView ScrollViewer.HorizontalScrollBarVisibility="Disabled" Foreground="White">
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="ViewDashboard" Width="25" Height="25" Margin="3" VerticalAlignment="Center"/>
+                            <TextBlock Text="Home" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Pencil" Width="25" Height="25" Margin="3" VerticalAlignment="Center"/>
+                            <TextBlock Text="Create Email" VerticalAlignment="Center" Margin="20 10"/>
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+            </StackPanel>
+        </Grid>
+        <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="1030" Height="504">
+            <Frame/>
+        </Grid>
     </Grid>
 </Window>
