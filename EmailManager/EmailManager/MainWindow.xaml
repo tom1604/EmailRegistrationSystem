@@ -29,9 +29,6 @@
         <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="BtnCloseMenu">
             <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
         </EventTrigger>
-        <EventTrigger RoutedEvent="ButtonBase.MouseUp" SourceName="GridFrame">
-            <BeginStoryboard Storyboard="{StaticResource MenuClose}"/>
-        </EventTrigger>
     </Window.Triggers>
 
     <Grid Background="LightGray">
