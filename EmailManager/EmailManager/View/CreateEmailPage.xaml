@@ -5,10 +5,67 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:EmailManager.View"
       mc:Ignorable="d" 
-      d:DesignHeight="518" d:DesignWidth="1030"
+      d:DesignHeight="520" d:DesignWidth="1030"
       Title="Page1">
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="#FF1D66CF" Offset="0.57"/>
+        </LinearGradientBrush>
+    </Page.Background>
+    <Page.Resources>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" x:Key="Brush">
+                <GradientStop Color="Black" Offset="0.0" />
+                <GradientStop Color="Blue" Offset="0.0" />
+        </LinearGradientBrush>
+            <Style x:Key="WatermarkTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <Border x:Name="BorderBase" Background="White" Width="400" BorderBrush="{StaticResource Brush}" BorderThickness="0 0 0 1">
+                                <Label x:Name="TextPrompt" 
+                                           Content="{Binding RelativeSource={RelativeSource  Mode=TemplatedParent}, Path=Tag}" 
+                                           Background="{TemplateBinding Background}" Visibility="Collapsed" 
+                                           Focusable="False" Foreground="Silver" Margin="0" HorizontalAlignment="Left"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsFocused" Value="False"/>
+                                    <Condition Property="Text" Value=""/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="Visibility" TargetName="TextPrompt" Value="Visible"/>
+                            </MultiTrigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="DimGray" />
+                            </Trigger>
+                            <EventTrigger RoutedEvent="GotFocus">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="BorderBase" Storyboard.TargetProperty="(BorderBrush).(LinearGradientBrush.GradientStops)[0].Offset"
+                                                         From="0" To="1" Duration="0:0:0.5" AutoReverse="True"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
-    <Grid>
-        <TextBox Text="zassssssssssssssssssssssssssssssssssss"></TextBox>
-    </Grid>
+
+    <Border BorderThickness="3" CornerRadius="10" Padding="2" Margin="0 -25 0 0"
+            HorizontalAlignment="Center" VerticalAlignment="Center" Name="mask" Background="AliceBlue">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" Direction="-90" RenderingBias="Quality" ShadowDepth="2"/>
+        </Border.Effect>
+        <Grid Width="980" Height="500">
+            <TextBox Style="{StaticResource WatermarkTextBox}" Tag="Sender Email" FontSize="15" Height="30" Width="400" Margin="60,35,520,435" />
+            <TextBox Style="{StaticResource WatermarkTextBox}" Tag="Subtitle" FontSize="15" Height="30" Width="400" Margin="520,35,60,435" />
+            <TextBox Style="{StaticResource WatermarkTextBox}" Tag="Email Body" FontSize="15" Height="30" Margin="520,101,60,369" Width="400"/>
+        </Grid>
+    </Border>
 </Page>

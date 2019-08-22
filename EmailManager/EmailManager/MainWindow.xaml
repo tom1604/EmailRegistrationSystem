@@ -32,20 +32,26 @@
     </Window.Triggers>
 
     <Grid Background="LightGray">
-        <Grid x:Name="GridTopPanel" VerticalAlignment="Top" Height="20" Background="#FF3F3F46" MouseDown="GridTopPanel_MouseDown">
-            <Button x:Name="BtnCloseWindow" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Background="#FF2D2D3B" Click="BtnCloseWindow_Click" BorderBrush="#FF757E85" Foreground="White">
+        <Grid x:Name="GridTopPanel" VerticalAlignment="Top" Height="20" Background="Black" MouseDown="GridTopPanel_MouseDown" ZIndex="0">
+            <Button x:Name="BtnCloseWindow" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Click="BtnCloseWindow_Click" BorderBrush="#FF757E85" Foreground="White">
+                <Button.Background>
+                    <SolidColorBrush Color="#990763BF" Opacity="0.6"/>
+                </Button.Background>
                 <materialDesign:PackIcon Kind="Close" Foreground="Red" Width="15" Height="15" VerticalAlignment="Center" Margin="-13"/>
             </Button>
-            <Button x:Name="BtnMinimizeWindow" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20" Background="#FF2D2D3B"  BorderBrush="#FF757E85" Foreground="White" Margin="0 0 25 0" Click="BtnMinimizeWindow_Click">
+            <Button x:Name="BtnMinimizeWindow" HorizontalAlignment="Right" VerticalAlignment="Top" Height="20" Width="20"  BorderBrush="#FF757E85" Foreground="White" Margin="0 0 25 0" Click="BtnMinimizeWindow_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="#990763BF" Opacity="0.6"/>
+                </Button.Background>
                 <materialDesign:PackIcon Kind="WindowMinimize" Foreground="White" Width="15" Height="15" VerticalAlignment="Center" Margin="-13"/>
             </Button>
         </Grid>
-        <Grid Height="60" VerticalAlignment="Top" Margin="0 20" Background="#FF2D2725">
+        <Grid Height="60" VerticalAlignment="Top" Margin="0 20" Background="Black" ZIndex="-2">
             <TextBlock Text="Email Manager" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
         </Grid>
-        <Grid Width="50" HorizontalAlignment="Left" Background="#FF2D2D3B" x:Name="GridMenu" ZIndex="0">
+        <Grid Width="50" HorizontalAlignment="Left" Background="Black" x:Name="GridMenu" ZIndex="-1">
             <StackPanel>
-                <Grid Height="120" Background="#FF2D2D3B" Margin="0 20 0 0">
+                <Grid Height="120" Background="Black" Margin="0 20 0 0">
                     <Button x:Name="BtnCloseMenu" VerticalAlignment="Top" HorizontalAlignment="Right" Width="60" Height="60" BorderBrush="{x:Null}" Background="{x:Null}" Visibility="Collapsed" Click="BtnCloseMenu_Click">
                         <materialDesign:PackIcon Foreground="White" Kind="ArrowLeft" Width="25" Height="25"/>
                     </Button>
@@ -69,7 +75,7 @@
                 </ListView>
             </StackPanel>
         </Grid>
-        <Grid x:Name="GridFrame" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="1030" Height="518" ZIndex="-2" PreviewMouseLeftButtonUp="GridFrame_OnPreviewMouseLeftButtonUp">
+        <Grid x:Name="GridFrame" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="1030" Height="520" ZIndex="-2" PreviewMouseLeftButtonUp="GridFrame_OnPreviewMouseLeftButtonUp">
             <Frame  x:Name="FramePage" NavigationUIVisibility="Hidden" Source="View/StartingPage.xaml"/>
         </Grid>
     </Grid>

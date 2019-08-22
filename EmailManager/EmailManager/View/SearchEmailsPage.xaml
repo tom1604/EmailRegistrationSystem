@@ -7,8 +7,14 @@
       mc:Ignorable="d" 
       d:DesignHeight="518" d:DesignWidth="1030"
       Title="Page2">
+    <Page.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="Black" Offset="0"/>
+            <GradientStop Color="#FF1D66CF" Offset="0.57"/>
+        </LinearGradientBrush>
+    </Page.Background>
 
     <Grid>
-        <TextBox Text="zdfgzdfgdfgzdf"></TextBox>
+        
     </Grid>
 </Page>
