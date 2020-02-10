@@ -6,19 +6,23 @@ namespace TagsApp
 {
     public class LineViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Line> Lines { get; set; } = new ObservableCollection<Line> { new Line { Title = "sdfsdf" }, new Line { Title = "sdfsdf" } };
-        private RelayCommand addCommand;
-        private RelayCommand deleteCommand;
+        public ObservableCollection<Line> Lines { get; set; }
+        private RelayCommand _addCommand;
+        private RelayCommand _deleteCommand;
+        private string _enteredTagText;
 
-        private Line enteredLine;
-
-        public Line EnteredLine
+        public LineViewModel()
         {
-            get { return enteredLine; }
+            Lines = new ObservableCollection<Line>();
+        }
+
+        public string EnteredTagText
+        {
+            get => _enteredTagText;
             set
             {
-                enteredLine = value;
-                OnPropertyChanged("EnteredLine");
+                _enteredTagText = value;
+                OnPropertyChanged(nameof(EnteredTagText));
             }
         }
 
@@ -26,7 +30,7 @@ namespace TagsApp
         {
             get
             {
-                return deleteCommand ?? (deleteCommand = new RelayCommand(obj =>
+                return _deleteCommand ?? (_deleteCommand = new RelayCommand(obj =>
                 {
                     DeleteLine((Line)obj);
                 }));
@@ -37,18 +41,25 @@ namespace TagsApp
         {
             get
             {
-                return addCommand ?? (addCommand = new RelayCommand(obj =>
-                  {
-                      Lines.Insert(0, new Line { Title = (string) obj });
+                return _addCommand ?? (_addCommand = new RelayCommand(obj =>
+                {
+                    var line = obj as string;
+                    if (string.IsNullOrWhiteSpace(line))
+                    {
+                        return;
+                    }
+
+                    Lines.Insert(0, new Line { Title = line });
+                    EnteredTagText = string.Empty;
                 }));
             }
         }
 
-        private void DeleteLine(Line obj)
+        private void DeleteLine(Line line)
         {
-            if(obj != null && Lines != null)
+            if(line != null)
             {
-                Lines.Remove(obj);
+                Lines.Remove(line);
             }
         }
 

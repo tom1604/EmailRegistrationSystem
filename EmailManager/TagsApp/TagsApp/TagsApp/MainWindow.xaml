@@ -35,7 +35,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Command="{Binding AddCommand}" CommandParameter="{Binding Text, ElementName=textBox}">Test</Button>
-        <TextBox Name="textBox" AcceptsReturn="False" Background="White" Width="100" Height="100" VerticalAlignment="Bottom">
+        <TextBox Text ="{Binding EnteredTagText, Mode=TwoWay}" Name="textBox" AcceptsReturn="False" Background="White" Width="100" Height="100" VerticalAlignment="Bottom">
             <TextBox.InputBindings>
                 <KeyBinding 
         Key="Enter" 
