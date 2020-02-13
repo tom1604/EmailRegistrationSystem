@@ -22,42 +22,42 @@
             <DropShadowEffect BlurRadius="30" Direction="-90" RenderingBias="Quality" ShadowDepth="2"/>
         </Border.Effect>
         <Grid Width="980" Height="500">
-            <extToolkit:WatermarkTextBox FontSize ="17" Watermark="Sender" BorderBrush="Blue" Width="400" Height="30" Margin="60,80,520,390" BorderThickness="0 0 0 1"
+            <extToolkit:WatermarkTextBox FontSize ="17" Watermark="Sender" BorderBrush="#FF0F63DC" Width="400" Height="30" Margin="60,80,520,390" BorderThickness="0 0 0 1"
                                          Text="{Binding Email.Sender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Subtitle" BorderBrush="Blue" Width="400" Height="30" Margin="520,80,60,390" BorderThickness="0 0 0 1"
+            <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Subtitle" BorderBrush="#FF0F63DC" Width="400" Height="30" Margin="520,80,60,390" BorderThickness="0 0 0 1"
                                          Text="{Binding Email.Subtitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Recipients" BorderBrush="Blue" Width="400" Height="135" Margin="60,124,520,241" BorderThickness="0 0 0 1"
+            <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Recipients" BorderBrush="#FF0F63DC" Width="400" Height="135" Margin="60,124,520,241" BorderThickness="0 0 0 1"
                                          AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
-            <extToolkit:WatermarkTextBox FontSize ="17" Watermark="Email body" Height="300" Width="400" BorderBrush="Blue" BorderThickness="0 0 0 1" Margin="520,124,60,76" 
+            <extToolkit:WatermarkTextBox FontSize ="17" Watermark="Email body" Height="300" Width="400" BorderBrush="#FF0F63DC" BorderThickness="0 0 0 1" Margin="520,124,60,76" 
                                          TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
-            <StackPanel>
-                <ListBox ItemsSource="{Binding Tegs}" Background="#FFBF2222" Width="400" Height="100">
+            <StackPanel Margin="60,288,520,76">
+                <ListBox ItemsSource="{Binding Tegs}" Background="White" Width="400" Height="100" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <VirtualizingStackPanel Orientation="Horizontal"/>
+                            <WrapPanel />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="models:Teg">
-                            <StackPanel>
-                                <Border Background="White" BorderBrush="#FFFDFDFD" BorderThickness="1" CornerRadius="10">
-                                    <Grid Background="#FF0A0F87">
+                            <WrapPanel Orientation="Horizontal" Width="Auto">
+                                <Border Background="White" BorderBrush="#FF0F63DC" BorderThickness="1" CornerRadius="10">
+                                    <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="0" Margin="5 2 8 2" TextAlignment="Center" FontSize="20" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="0" Margin="5 2 3 2" TextAlignment="Center" FontSize="17" HorizontalAlignment="Center" Foreground="Gray"/>
                                         <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.DeleteCommand}" 
-                                                CommandParameter="{Binding}" Background="White" Grid.Column="1" Width="15" Height="15" Margin="2">
-                                            <materialDesign:PackIcon Kind="Close" Foreground="#FF0F63DC" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-10"/>
+                                                CommandParameter="{Binding}" Background="White" HorizontalAlignment="Right" VerticalAlignment="Center" Height="15" Width="15" BorderBrush="#FF0F63DC" Grid.Column="1" Margin="5">
+                                            <materialDesign:PackIcon Kind="Close" Foreground="#FF0F63DC" Width="10" Height="10" VerticalAlignment="Center" Margin="-14"/>
                                         </Button>
                                     </Grid>
                                 </Border>
-                            </StackPanel>
+                            </WrapPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Tegs" BorderBrush="Blue" Width="400" Height="35" Margin="60,288,520,76" BorderThickness="0 0 0 1"
+                <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Tegs" BorderBrush="#FF0F63DC" Width="400" Height="35" BorderThickness="0 0 0 1"
                                              AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Text="{Binding EnteredTegText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <extToolkit:WatermarkTextBox.InputBindings>
                         <KeyBinding 
