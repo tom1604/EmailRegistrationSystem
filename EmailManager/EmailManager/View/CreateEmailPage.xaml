@@ -72,7 +72,7 @@
                             <GradientStop Color="#FF1D66CF" Offset="0.6"/>
                         </LinearGradientBrush>
                     </Button.Background>
-                    <materialDesign:PackIcon Kind="KeyboardReturn" Foreground="White" Width="30" Height="30" VerticalAlignment="Center" />
+                    <materialDesign:PackIcon Kind="KeyboardReturn" Foreground="White" Width="20" Height="20" VerticalAlignment="Center" />
                 </Button>
             </WrapPanel>
             <Button Content="Сохранить" HorizontalAlignment="Left" Margin="809,442,0,0" VerticalAlignment="Top" Width="111">
