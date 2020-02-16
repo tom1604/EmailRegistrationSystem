@@ -1,24 +1,29 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using EmailManager.Models;
+using Xceed.Wpf.Toolkit;
 
 namespace EmailManager.ViewModels
 {
     public class CreateEmailViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<Teg> Tegs { get; set; }
+        public ObservableCollection<Recipient> Recipients { get; set; }
 
         private RelayCommand _addCommand;
         private RelayCommand _deleteCommand;
 
         private string _enteredTegText;
+        private string _enteredRecipientEmail;
         private Email _email;
 
         public CreateEmailViewModel()
         {
             Email = new Email();
             Tegs = new ObservableCollection<Teg>();
+            Recipients = new ObservableCollection<Recipient>();
         }
 
         public string EnteredTegText
@@ -28,6 +33,16 @@ namespace EmailManager.ViewModels
             {
                 _enteredTegText = value;
                 OnPropertyChanged(nameof(EnteredTegText));
+            }
+        }
+
+        public string EnteredRecipientEmail
+        {
+            get => _enteredRecipientEmail;
+            set
+            {
+                _enteredRecipientEmail = value;
+                OnPropertyChanged(nameof(EnteredRecipientEmail));
             }
         }
 
@@ -42,14 +57,16 @@ namespace EmailManager.ViewModels
             }
         }
 
-
         public RelayCommand DeleteCommand
         {
             get
             {
                 return _deleteCommand ?? (_deleteCommand = new RelayCommand(obj =>
                 {
-                    DeleteLine((Teg)obj);
+                    if (obj != null)
+                    {
+                        Delete(obj);
+                    }
                 }));
             }
         }
@@ -60,28 +77,42 @@ namespace EmailManager.ViewModels
             {
                 return _addCommand ?? (_addCommand = new RelayCommand(obj =>
                 {
-                    var teg = obj as string;
-                    if (string.IsNullOrWhiteSpace(teg))
+                    if (obj != null)
                     {
-                        return;
+                        AddObject(obj);
                     }
-
-                    CreateTeg(teg);
-                    EnteredTegText = string.Empty;
                 }));
             }
         }
 
-        private void CreateTeg(string value)
+        private void AddObject(object obj)
         {
-            Tegs.Add(new Teg{Name = value});
+            var textBox = obj as WatermarkTextBox;
+            if (!string.IsNullOrEmpty(textBox.Text))
+            {
+                switch (textBox.Name)
+                {
+                    case nameof(Recipient):
+                        Recipients.Add(new Recipient { Email = textBox.Text });
+                        EnteredRecipientEmail = string.Empty;
+                        break;
+                    case nameof(Teg):
+                        Tegs.Add(new Teg { Name = textBox.Text });
+                        EnteredTegText = string.Empty;
+                        break;
+                }
+            }
         }
 
-        private void DeleteLine(Teg teg)
+        private void Delete(object obj)
         {
-            if (teg != null)
+            if (obj is Teg)
             {
-                Tegs.Remove(teg);
+                Tegs.Remove((Teg)obj);
+            }
+            else
+            {
+                Recipients.Remove((Recipient)obj);
             }
         }
 
