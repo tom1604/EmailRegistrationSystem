@@ -21,8 +21,16 @@
             <DropShadowEffect BlurRadius="30" Direction="-90" RenderingBias="Quality" ShadowDepth="2"/>
         </Border.Effect>
         <Grid Width="980" Height="500">
-            <extToolkit:WatermarkTextBox FontSize ="17" Watermark="Sender" BorderBrush="#FF0F63DC" Width="400" Height="30" Margin="60,80,520,390" BorderThickness="0 0 0 1"
-                                         Text="{Binding Email.Sender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            <extToolkit:WatermarkTextBox FontSize ="17" 
+                                         Watermark="Sender" 
+                                         BorderBrush="#FF0F63DC" 
+                                         Width="400" 
+                                         Height="30" 
+                                         Margin="60,80,520,390" 
+                                         BorderThickness="0 0 0 1"
+                                         Name="SenderTextBox"
+                                         Text="{Binding Path=Email.Sender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            </extToolkit:WatermarkTextBox>
             <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Subtitle" BorderBrush="#FF0F63DC" Width="400" Height="30" Margin="520,80,60,390" BorderThickness="0 0 0 1"
                                          Text="{Binding Email.Subtitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             <extToolkit:WatermarkTextBox FontSize ="17" Watermark="Email body" Height="300" Width="400" BorderBrush="#FF0F63DC" BorderThickness="0 0 0 1" Margin="520,124,60,76" 
@@ -55,8 +63,18 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <extToolkit:WatermarkTextBox Name="Recipient" HorizontalAlignment="Left" FontSize ="17" Watermark ="Recipients" BorderBrush="#FF0F63DC" Width="350" Height="35" BorderThickness="0 0 0 1"
-                                       VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Text="{Binding EnteredRecipientEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <extToolkit:WatermarkTextBox 
+                    Name="Recipient" 
+                    HorizontalAlignment="Left" 
+                    FontSize ="17" 
+                    Watermark ="Recipients" 
+                    BorderBrush="#FF0F63DC" 
+                    Width="350" 
+                    Height="35" 
+                    BorderThickness="0 0 0 1"    
+                    VerticalScrollBarVisibility="Auto" 
+                    TextWrapping="Wrap" 
+                    Text="{Binding Path=EnteredRecipientEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <extToolkit:WatermarkTextBox.InputBindings>
                         <KeyBinding 
                             Key="Enter" 

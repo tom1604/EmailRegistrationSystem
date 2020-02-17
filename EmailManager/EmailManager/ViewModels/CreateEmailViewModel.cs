@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Controls;
 using EmailManager.Models;
 using Xceed.Wpf.Toolkit;
 
@@ -106,13 +105,15 @@ namespace EmailManager.ViewModels
 
         private void Delete(object obj)
         {
-            if (obj is Teg)
+            switch(obj)
             {
-                Tegs.Remove((Teg)obj);
-            }
-            else
-            {
-                Recipients.Remove((Recipient)obj);
+                case Teg teg:
+                    Tegs.Remove(teg);
+                    break;
+                case Recipient recipient:
+                    Recipients.Remove(recipient);
+                    break;
+
             }
         }
 
