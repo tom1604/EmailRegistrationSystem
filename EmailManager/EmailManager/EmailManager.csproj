@@ -82,6 +82,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="ViewModels\CreateEmailViewModel.cs" />
     <Compile Include="ViewModels\ListEmailsViewModel.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -150,6 +151,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

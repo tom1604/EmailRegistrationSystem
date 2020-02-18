@@ -1,12 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EmailManager.Helpers;
 using EmailManager.Models;
 using Xceed.Wpf.Toolkit;
 
 namespace EmailManager.ViewModels
 {
-    public class CreateEmailViewModel : INotifyPropertyChanged
+    public class CreateEmailViewModel : INotifyPropertyChanged, IDataErrorInfo 
     {
         public ObservableCollection<Teg> Tegs { get; set; }
         public ObservableCollection<Recipient> Recipients { get; set; }
@@ -86,20 +87,27 @@ namespace EmailManager.ViewModels
 
         private void AddObject(object obj)
         {
-            var textBox = obj as WatermarkTextBox;
-            if (!string.IsNullOrEmpty(textBox.Text))
+            if (!(obj is WatermarkTextBox textBox))
             {
-                switch (textBox.Name)
-                {
-                    case nameof(Recipient):
-                        Recipients.Add(new Recipient { Email = textBox.Text });
+                return;
+            }
+
+            switch (textBox.Name)
+            {
+                case nameof(Recipient):
+                    if (!string.IsNullOrWhiteSpace(EnteredRecipientEmail) && IsValidProperty("EnteredRecipientEmail"))
+                    {
+                        Recipients.Add(new Recipient { Email = EnteredRecipientEmail });
                         EnteredRecipientEmail = string.Empty;
-                        break;
-                    case nameof(Teg):
-                        Tegs.Add(new Teg { Name = textBox.Text });
+                    }
+                    break;
+                case nameof(Teg):
+                    if (!string.IsNullOrWhiteSpace(EnteredTegText))
+                    {
+                        Tegs.Add(new Teg {Name = EnteredTegText});
                         EnteredTegText = string.Empty;
-                        break;
-                }
+                    }
+                    break;
             }
         }
 
@@ -122,6 +130,29 @@ namespace EmailManager.ViewModels
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public string this[string propertyName] => GetValidationError(propertyName);
+
+        public string Error { get; }
+
+        private bool IsValidProperty(string propertyName)
+        {
+            return string.IsNullOrEmpty(GetValidationError(propertyName));
+        }
+
+        private string GetValidationError(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case "EnteredRecipientEmail":
+                    return string.IsNullOrEmpty(EnteredRecipientEmail) ? string.Empty :
+                        !EnteredRecipientEmail.IsValidEmail() 
+                            ? "Incorrect email address" 
+                            : string.Empty; 
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

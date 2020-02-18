@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using EmailManager.Helpers;
 
 namespace EmailManager.Models
 {
-    public class Email : INotifyPropertyChanged
+    public class Email : INotifyPropertyChanged, IDataErrorInfo
     {
         private string _subtitle;
         private string _emailbody;
@@ -16,10 +18,7 @@ namespace EmailManager.Models
 
         public string Subtitle
         {
-            get
-            {
-                return _subtitle;
-            }
+            get => _subtitle;
 
             set
             {
@@ -30,7 +29,7 @@ namespace EmailManager.Models
 
         public string EmailBody
         {
-            get { return _emailbody; }
+            get => _emailbody;
 
             set
             {
@@ -41,7 +40,7 @@ namespace EmailManager.Models
 
         public string SenderEmail
         {
-            get { return _senderemail; }
+            get => _senderemail;
 
             set
             {
@@ -52,7 +51,7 @@ namespace EmailManager.Models
 
         public DateTime RegistrationDate
         {
-            get { return _registrationdate; }
+            get => _registrationdate;
 
             set
             {
@@ -63,7 +62,7 @@ namespace EmailManager.Models
 
         public ObservableCollection<Teg> Tegs
         {
-            get { return new ObservableCollection<Teg>(_tegs); }
+            get => new ObservableCollection<Teg>(_tegs);
 
             set
             {
@@ -74,7 +73,7 @@ namespace EmailManager.Models
 
         public ObservableCollection<Recipient> Recipients
         {
-            get { return new ObservableCollection<Recipient>(_recipients); }
+            get => new ObservableCollection<Recipient>(_recipients);
 
             set
             {
@@ -88,6 +87,44 @@ namespace EmailManager.Models
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public string this[string propertyName] => GetValidationError(propertyName);
+
+        public string Error => null;
+
+        private static readonly string[] ValidatedProperties =
+        {
+            "SenderEmail"
+        };
+
+        public bool IsValid
+        {
+            get
+            {
+                return ValidatedProperties.All(property => GetValidationError(property) == null);
+            }
+        }
+
+        private string GetValidationError(string propertyName)
+        {
+            switch (propertyName)
+            {
+                case "SenderEmail":
+                    return ValidateSenderEmail();
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private string ValidateSenderEmail()
+        {
+            return !string.IsNullOrEmpty(SenderEmail)
+                ? !SenderEmail.IsValidEmail()
+                    ?
+                    "Incorrect email address"
+                    : string.Empty
+                : string.Empty;
         }
     }
 }

@@ -14,6 +14,28 @@
             <GradientStop Color="#FF1D66CF" Offset="0.57"/>
         </LinearGradientBrush>
     </Page.Background>
+    <Page.Resources>
+        <Style TargetType="extToolkit:WatermarkTextBox" x:Key="ValidStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,2,40,2" />
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <DockPanel LastChildFill="true">
+                            <Border Background="Red" DockPanel.Dock="right" Margin="5,0,0,0" Width="20" Height="20" CornerRadius="10"
+                                    ToolTip="{Binding ElementName=customAdorner, Path=AdornedElement.(Validation.Errors)[0].ErrorContent}">
+                                <TextBlock Text="!" VerticalAlignment="center" HorizontalAlignment="center" FontWeight="Bold" Foreground="white">
+                                </TextBlock>
+                            </Border>
+                            <AdornedElementPlaceholder Name="customAdorner" VerticalAlignment="Center" >
+                                <Border BorderBrush="red" BorderThickness="0 0 0 1" />
+                            </AdornedElementPlaceholder>
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Border BorderThickness="3" CornerRadius="10" Padding="2" Margin="0 -25 0 0"
             HorizontalAlignment="Center" VerticalAlignment="Center" Background="AliceBlue">
@@ -24,19 +46,17 @@
             <extToolkit:WatermarkTextBox FontSize ="17" 
                                          Watermark="Sender" 
                                          BorderBrush="#FF0F63DC" 
-                                         Width="400" 
-                                         Height="30" 
                                          Margin="60,80,520,390" 
                                          BorderThickness="0 0 0 1"
                                          Name="SenderTextBox"
-                                         Text="{Binding Path=Email.Sender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            </extToolkit:WatermarkTextBox>
-            <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Subtitle" BorderBrush="#FF0F63DC" Width="400" Height="30" Margin="520,80,60,390" BorderThickness="0 0 0 1"
+                                         Style="{StaticResource ValidStyle}"
+                                         Text="{Binding Path=Email.SenderEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}"/>
+            <extToolkit:WatermarkTextBox FontSize ="17" Watermark ="Subtitle" BorderBrush="#FF0F63DC" Margin="520,80,60,390" BorderThickness="0 0 0 1"
                                          Text="{Binding Email.Subtitle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            <extToolkit:WatermarkTextBox FontSize ="17" Watermark="Email body" Height="300" Width="400" BorderBrush="#FF0F63DC" BorderThickness="0 0 0 1" Margin="520,124,60,76" 
+            <extToolkit:WatermarkTextBox FontSize ="17" Watermark="Email body" BorderBrush="#FF0F63DC" BorderThickness="0 0 0 1" Margin="520,133,60,75" 
                                          TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
 
-            <WrapPanel Margin="60,124,520,241">
+            <WrapPanel Margin="60,133,520,232">
                 <ListBox ItemsSource="{Binding Recipients}" Background="White" Width="400" Height="100" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -53,7 +73,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{Binding Email}" VerticalAlignment="Center" Grid.Column="0" Margin="5 2 3 2" TextAlignment="Center" FontSize="17" HorizontalAlignment="Center"/>
-                                        <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.DeleteCommand}" 
+                                        <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" 
                                                 CommandParameter="{Binding}" Background="White" HorizontalAlignment="Right" VerticalAlignment="Center" Height="15" Width="15" BorderBrush="#FF0F63DC" Grid.Column="1" Margin="5">
                                             <materialDesign:PackIcon Kind="Close" Foreground="#FF0F63DC" Width="10" Height="10" VerticalAlignment="Center" Margin="-14"/>
                                         </Button>
@@ -64,7 +84,7 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <extToolkit:WatermarkTextBox 
-                    Name="Recipient" 
+                    x:Name="Recipient" 
                     HorizontalAlignment="Left" 
                     FontSize ="17" 
                     Watermark ="Recipients" 
@@ -73,8 +93,8 @@
                     Height="35" 
                     BorderThickness="0 0 0 1"    
                     VerticalScrollBarVisibility="Auto" 
-                    TextWrapping="Wrap" 
-                    Text="{Binding Path=EnteredRecipientEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    TextWrapping="Wrap"
+                    Text="{Binding EnteredRecipientEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <extToolkit:WatermarkTextBox.InputBindings>
                         <KeyBinding 
                             Key="Enter" 
@@ -94,7 +114,7 @@
             </WrapPanel>
 
 
-            <WrapPanel Margin="60,288,520,76">
+            <WrapPanel Margin="60,289,520,75">
                 <ListBox ItemsSource="{Binding Tegs}" Background="White" Width="400" Height="100" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -111,7 +131,7 @@
                                             <ColumnDefinition Width="*"/>
                                         </Grid.ColumnDefinitions>
                                         <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Grid.Column="0" Margin="5 2 3 2" TextAlignment="Center" FontSize="17" HorizontalAlignment="Center"/>
-                                        <Button Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.DeleteCommand}" 
+                                        <Button Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}}" 
                                                 CommandParameter="{Binding}" Background="White" HorizontalAlignment="Right" VerticalAlignment="Center" Height="15" Width="15" BorderBrush="#FF0F63DC" Grid.Column="1" Margin="5">
                                             <materialDesign:PackIcon Kind="Close" Foreground="#FF0F63DC" Width="10" Height="10" VerticalAlignment="Center" Margin="-14"/>
                                         </Button>
