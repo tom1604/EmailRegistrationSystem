@@ -95,7 +95,8 @@ namespace EmailManager.Models
 
         private static readonly string[] ValidatedProperties =
         {
-            "SenderEmail"
+            "SenderEmail",
+            "Recipients"
         };
 
         public bool IsValid
@@ -112,9 +113,16 @@ namespace EmailManager.Models
             {
                 case "SenderEmail":
                     return ValidateSenderEmail();
+                case "Recipients":
+                    return ValidateRecipients();
                 default:
                     return string.Empty;
             }
+        }
+
+        private string ValidateRecipients()
+        {
+            return Recipients == null ? "At least one Recipient should be added" : string.Empty;
         }
 
         private string ValidateSenderEmail()
@@ -124,7 +132,7 @@ namespace EmailManager.Models
                     ?
                     "Incorrect email address"
                     : string.Empty
-                : string.Empty;
+                : "The field Sender should not be empty";
         }
     }
 }

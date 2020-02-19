@@ -11,6 +11,7 @@ namespace EmailManager.ViewModels
     {
         private RelayCommand _addCommand;
         private RelayCommand _deleteCommand;
+        private RelayCommand _submitCommand;
 
         private string _enteredTegText;
         private string _enteredRecipientEmail;
@@ -80,6 +81,20 @@ namespace EmailManager.ViewModels
             }
         }
 
+        public RelayCommand SubmitCommand
+        {
+            get
+            {
+                return _submitCommand ?? (_submitCommand = new RelayCommand(obj => {
+                               if (obj != null)
+                               {
+                                   AddEmail(obj);
+                               }
+                           }
+                       ));
+            }
+        }
+
         private void AddObject(object obj)
         {
             if (!(obj is WatermarkTextBox textBox))
@@ -129,6 +144,15 @@ namespace EmailManager.ViewModels
             }
         }
 
+        private void AddEmail(object obj)
+        {
+            if (obj is Email email)
+            {
+                ////save email
+                Email = new Email();
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -153,7 +177,7 @@ namespace EmailManager.ViewModels
                     return string.IsNullOrEmpty(EnteredRecipientEmail) ? string.Empty :
                         !EnteredRecipientEmail.IsValidEmail() 
                             ? "Incorrect email address" 
-                            : string.Empty; 
+                            : string.Empty;
                 default:
                     return string.Empty;
             }
