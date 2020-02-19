@@ -9,9 +9,6 @@ namespace EmailManager.ViewModels
 {
     public class CreateEmailViewModel : INotifyPropertyChanged, IDataErrorInfo 
     {
-        public ObservableCollection<Teg> Tegs { get; set; }
-        public ObservableCollection<Recipient> Recipients { get; set; }
-
         private RelayCommand _addCommand;
         private RelayCommand _deleteCommand;
 
@@ -22,8 +19,6 @@ namespace EmailManager.ViewModels
         public CreateEmailViewModel()
         {
             Email = new Email();
-            Tegs = new ObservableCollection<Teg>();
-            Recipients = new ObservableCollection<Recipient>();
         }
 
         public string EnteredTegText
@@ -97,14 +92,23 @@ namespace EmailManager.ViewModels
                 case nameof(Recipient):
                     if (!string.IsNullOrWhiteSpace(EnteredRecipientEmail) && IsValidProperty("EnteredRecipientEmail"))
                     {
-                        Recipients.Add(new Recipient { Email = EnteredRecipientEmail });
+                        if (Email.Recipients == null)
+                        {
+                            Email.Recipients = new ObservableCollection<Recipient>();
+                        }
+                        Email.Recipients.Add(new Recipient(EnteredRecipientEmail));
                         EnteredRecipientEmail = string.Empty;
                     }
                     break;
                 case nameof(Teg):
                     if (!string.IsNullOrWhiteSpace(EnteredTegText))
                     {
-                        Tegs.Add(new Teg {Name = EnteredTegText});
+                        if (Email.Tegs == null)
+                        {
+                            Email.Tegs = new ObservableCollection<Teg>();
+                        }
+
+                        Email.Tegs.Add(new Teg(EnteredTegText));
                         EnteredTegText = string.Empty;
                     }
                     break;
@@ -116,10 +120,10 @@ namespace EmailManager.ViewModels
             switch(obj)
             {
                 case Teg teg:
-                    Tegs.Remove(teg);
+                    Email.Tegs?.Remove(teg);
                     break;
                 case Recipient recipient:
-                    Recipients.Remove(recipient);
+                    Email.Recipients?.Remove(recipient);
                     break;
 
             }
@@ -134,7 +138,7 @@ namespace EmailManager.ViewModels
 
         public string this[string propertyName] => GetValidationError(propertyName);
 
-        public string Error { get; }
+        public string Error => null;
 
         private bool IsValidProperty(string propertyName)
         {

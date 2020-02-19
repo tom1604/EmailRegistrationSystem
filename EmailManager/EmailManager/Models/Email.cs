@@ -62,7 +62,7 @@ namespace EmailManager.Models
 
         public ObservableCollection<Teg> Tegs
         {
-            get => new ObservableCollection<Teg>(_tegs);
+            get => _tegs;
 
             set
             {
@@ -73,7 +73,7 @@ namespace EmailManager.Models
 
         public ObservableCollection<Recipient> Recipients
         {
-            get => new ObservableCollection<Recipient>(_recipients);
+            get => _recipients;
 
             set
             {
