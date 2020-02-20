@@ -82,6 +82,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\SuccessControl.xaml.cs">
+      <DependentUpon>SuccessControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ValidationHelper.cs" />
     <Compile Include="ViewModels\CreateEmailViewModel.cs" />
     <Compile Include="ViewModels\ListEmailsViewModel.cs" />
@@ -96,6 +99,10 @@
     <Compile Include="View\StartingPage.xaml.cs">
       <DependentUpon>StartingPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="Controls\SuccessControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

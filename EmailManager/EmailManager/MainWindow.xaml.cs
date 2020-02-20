@@ -22,7 +22,7 @@ namespace EmailManager
         {
             BtnOpenMenu.Visibility = Visibility.Collapsed;
             BtnCloseMenu.Visibility = Visibility.Visible;
-            (DataContext as MainWindowViewModel).IsOpened = true;
+            ((MainWindowViewModel) DataContext).IsOpened = true;
 
             
         }
@@ -31,7 +31,7 @@ namespace EmailManager
         {
             BtnOpenMenu.Visibility = Visibility.Visible;
             BtnCloseMenu.Visibility = Visibility.Collapsed;
-            (DataContext as MainWindowViewModel).IsOpened = false;
+            ((MainWindowViewModel) DataContext).IsOpened = false;
         }
 
         private void BtnCloseWindow_Click(object sender, RoutedEventArgs e)
@@ -55,6 +55,11 @@ namespace EmailManager
             FramePage.NavigationService.Navigate(new Uri("View/CreateEmailPage.xaml", UriKind.Relative));
         }
 
+        private void ControlItem_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            FramePage.NavigationService.Navigate(new Uri("Controls/SuccessControl.xaml", UriKind.Relative));
+        }
+
         private void SearchItem_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             FramePage.NavigationService.Navigate(new Uri("View/SearchEmailsPage.xaml", UriKind.Relative));
@@ -64,12 +69,12 @@ namespace EmailManager
         {
             BtnOpenMenu.Visibility = Visibility.Visible;
             BtnCloseMenu.Visibility = Visibility.Collapsed;
-            if ((DataContext as MainWindowViewModel).IsOpened)
+            if (((MainWindowViewModel) DataContext).IsOpened)
             {
                 Storyboard storyboard = (Storyboard) FindResource("MenuClose");
                 Storyboard.SetTarget(storyboard, GridMenu);
                 storyboard.Begin();
-                (DataContext as MainWindowViewModel).IsOpened = false;
+                ((MainWindowViewModel) DataContext).IsOpened = false;
             }
         }
     }

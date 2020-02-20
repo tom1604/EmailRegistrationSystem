@@ -3,8 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EmailManager"
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" Height="600" Width="1080" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
@@ -67,6 +65,12 @@
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem x:Name="CreateItem" Height="60"  MouseLeftButtonUp="CreateItem_OnMouseLeftButtonUp">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Pencil" Width="25" Height="25" Margin="3" VerticalAlignment="Center"/>
+                            <TextBlock Text="Create Email" VerticalAlignment="Center" Margin="20 10" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem x:Name="ControlItem" Height="60"  MouseLeftButtonUp="ControlItem_OnMouseLeftButtonUp">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="Pencil" Width="25" Height="25" Margin="3" VerticalAlignment="Center"/>
                             <TextBlock Text="Create Email" VerticalAlignment="Center" Margin="20 10" />
