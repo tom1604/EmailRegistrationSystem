@@ -16,10 +16,13 @@ namespace EmailManager.ViewModels
         private string _enteredTegText;
         private string _enteredRecipientEmail;
         private Email _email;
+        private bool _isAdded;
+        
 
         public CreateEmailViewModel()
         {
             Email = new Email();
+            IsAdded = false;
         }
 
         public string EnteredTegText
@@ -51,6 +54,17 @@ namespace EmailManager.ViewModels
                 //check valid
                 OnPropertyChanged(nameof(Email));
             }
+        }
+
+        public bool IsAdded
+        {
+            get => _isAdded;
+            set
+            {
+                _isAdded = value;
+                OnPropertyChanged(nameof(IsAdded));
+            }
+
         }
 
         public RelayCommand DeleteCommand
@@ -149,6 +163,7 @@ namespace EmailManager.ViewModels
             if (obj is Email email)
             {
                 ////save email
+                IsAdded = true;
                 Email = new Email();
             }
         }

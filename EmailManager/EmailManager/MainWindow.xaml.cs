@@ -55,11 +55,6 @@ namespace EmailManager
             FramePage.NavigationService.Navigate(new Uri("View/CreateEmailPage.xaml", UriKind.Relative));
         }
 
-        private void ControlItem_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            FramePage.NavigationService.Navigate(new Uri("Controls/SuccessControl.xaml", UriKind.Relative));
-        }
-
         private void SearchItem_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             FramePage.NavigationService.Navigate(new Uri("View/SearchEmailsPage.xaml", UriKind.Relative));

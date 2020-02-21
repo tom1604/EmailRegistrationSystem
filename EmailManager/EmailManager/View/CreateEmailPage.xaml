@@ -6,6 +6,7 @@
       xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:models="clr-namespace:EmailManager.Models"
+      xmlns:controls="clr-namespace:EmailManager.Controls"
       mc:Ignorable="d" 
       d:DesignHeight="520" d:DesignWidth="1030">
     <Page.Background>
@@ -14,6 +15,21 @@
             <GradientStop Color="#FF1D66CF" Offset="0.57"/>
         </LinearGradientBrush>
     </Page.Background>
+
+    <Page.Triggers>
+        <EventTrigger SourceName="SuccessPopup" RoutedEvent="Popup.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="SuccessUserControl" Storyboard.TargetProperty="Opacity"
+                                     From="1.0" To="0.0" Duration="0:0:7"/>
+                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="SuccessPopup" Storyboard.TargetProperty="IsOpen">
+                        <DiscreteBooleanKeyFrame KeyTime="0:0:7.2" Value="False" />
+                    </BooleanAnimationUsingKeyFrames>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Page.Triggers>
+
     <Page.Resources>
         <Style TargetType="Button" x:Key="BntStyle">
             <Setter Property="Background">
@@ -345,6 +361,7 @@
                     VerticalAlignment="Top" 
                     Width="111"
                     Height="33"
+                    Name ="SubmitBtn"
                     Foreground="White"
                     Command="{Binding SubmitCommand}"
                     CommandParameter="{Binding Email}"
@@ -356,6 +373,20 @@
                        Margin="0,20,0,0" 
                        VerticalAlignment="Top" 
                        FontSize="25" />
+            <Popup Width="1080" 
+                   Height="600" 
+                   IsOpen="{Binding IsAdded, Mode=TwoWay}"
+                   PlacementTarget ="{Binding ElementName=MainLayout}"
+                   AllowsTransparency="True"  
+                   PopupAnimation="Fade"
+                   Placement="Center"
+                   HorizontalOffset="-25"
+                   VerticalOffset="-28"
+                   StaysOpen="False"
+                   x:Name="SuccessPopup">
+
+                <controls:SuccessControl x:Name="SuccessUserControl"/>
+            </Popup>
         </Grid>
     </Border>
 </Page>
