@@ -216,7 +216,6 @@
                     <Ellipse x:Name="Ellipse18" Canvas.Left="30" Canvas.Top="14"/>
                     <Ellipse x:Name="Ellipse19" Canvas.Left="50" Canvas.Top="4"/>
                 </Canvas>
-                <Label Content="{Binding Path=Text}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </Grid>
         </Border>
     </Grid>

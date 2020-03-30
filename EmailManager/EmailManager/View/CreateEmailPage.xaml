@@ -16,21 +16,16 @@
         </LinearGradientBrush>
     </Page.Background>
 
-    <Page.Triggers>
-        <EventTrigger SourceName="SuccessPopup" RoutedEvent="Popup.Loaded">
-            <BeginStoryboard>
-                <Storyboard>
-                    <DoubleAnimation Storyboard.TargetName="SuccessUserControl" Storyboard.TargetProperty="Opacity"
-                                     From="1.0" To="0.0" Duration="0:0:7"/>
-                    <BooleanAnimationUsingKeyFrames Storyboard.TargetName="SuccessPopup" Storyboard.TargetProperty="IsOpen">
-                        <DiscreteBooleanKeyFrame KeyTime="0:0:7.2" Value="False" />
-                    </BooleanAnimationUsingKeyFrames>
-                </Storyboard>
-            </BeginStoryboard>
-        </EventTrigger>
-    </Page.Triggers>
-
     <Page.Resources>
+
+        <Storyboard x:Key="OpenControlOpacityStoryBoard">
+            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                             From="1.0" To="0.0" Duration="0:0:5"/>
+            <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                <DiscreteStringKeyFrame KeyTime="0:0:5.2" Value="Visible"/> 
+            </StringAnimationUsingKeyFrames>
+        </Storyboard>
+
         <Style TargetType="Button" x:Key="BntStyle">
             <Setter Property="Background">
                 <Setter.Value>
@@ -175,7 +170,7 @@
                                          TextWrapping="Wrap" 
                                          AcceptsReturn="True"
                                          VerticalScrollBarVisibility="Auto"
-                                         Text="{Binding Email.BodyEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                         Text="{Binding Email.EmailBody, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <WrapPanel Margin="40,133,520,232">
                 <ListBox ItemsSource="{Binding Email.Recipients, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
@@ -373,20 +368,31 @@
                        Margin="0,20,0,0" 
                        VerticalAlignment="Top" 
                        FontSize="25" />
-            <Popup Width="1080" 
-                   Height="600" 
-                   IsOpen="{Binding IsAdded, Mode=TwoWay}"
-                   PlacementTarget ="{Binding ElementName=MainLayout}"
-                   AllowsTransparency="True"  
-                   PopupAnimation="Fade"
-                   Placement="Center"
-                   HorizontalOffset="-25"
-                   VerticalOffset="-28"
-                   StaysOpen="False"
-                   x:Name="SuccessPopup">
-
-                <controls:SuccessControl x:Name="SuccessUserControl"/>
-            </Popup>
+            <controls:SuccessControl x:Name="SuccessUserControl" Opacity="1" >
+                <controls:SuccessControl.Style>
+                    <Style>
+                        <Style.Triggers>
+                            <Trigger Property="controls:SuccessControl.Tag" Value="True">
+                                <Setter Property="controls:SuccessControl.Visibility" Value="Visible"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                             From="1.0" To="0.0" Duration="0:0:5"/>
+                                            <StringAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                                <DiscreteStringKeyFrame KeyTime="0:0:5.2" Value="Hidden"/>
+                                            </StringAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                            </Trigger>
+                            <Trigger Property="controls:SuccessControl.Tag" Value="False">
+                                <Setter Property="controls:SuccessControl.Opacity" Value="1.0"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </controls:SuccessControl.Style>
+            </controls:SuccessControl>
         </Grid>
     </Border>
 </Page>
