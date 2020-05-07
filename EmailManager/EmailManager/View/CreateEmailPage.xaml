@@ -368,7 +368,7 @@
                        Margin="0,20,0,0" 
                        VerticalAlignment="Top" 
                        FontSize="25" />
-            <controls:SuccessControl x:Name="SuccessUserControl" Opacity="1" >
+            <!--<controls:SuccessControl x:Name="SuccessUserControl" Opacity="1" >
                 <controls:SuccessControl.Style>
                     <Style>
                         <Style.Triggers>
@@ -392,7 +392,7 @@
                         </Style.Triggers>
                     </Style>
                 </controls:SuccessControl.Style>
-            </controls:SuccessControl>
+            </controls:SuccessControl>-->
         </Grid>
     </Border>
 </Page>

@@ -1,13 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using EmailManager.Helpers;
+using EmailManager.Interfaces;
 using EmailManager.Models;
 using Xceed.Wpf.Toolkit;
 
 namespace EmailManager.ViewModels
 {
-    public class CreateEmailViewModel : INotifyPropertyChanged, IDataErrorInfo 
+    public class CreateEmailViewModel : BaseViewModel, IDataErrorInfo, ICreateEmailViewModel
     {
         private RelayCommand _addCommand;
         private RelayCommand _deleteCommand;
@@ -17,11 +17,14 @@ namespace EmailManager.ViewModels
         private string _enteredRecipientEmail;
         private Email _email;
         private bool _isAdded;
+
+        private IEmailService EmailService { get;}
         
 
-        public CreateEmailViewModel()
+        public CreateEmailViewModel(IEmailService emailService)
         {
             Email = new Email();
+            EmailService = emailService;
             IsAdded = false;
         }
 
@@ -166,13 +169,6 @@ namespace EmailManager.ViewModels
                 IsAdded = true;
                 Email = new Email();
             }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
 
         public string this[string propertyName] => GetValidationError(propertyName);
