@@ -23,7 +23,7 @@ namespace EmailManager.Models
             set
             {
                 _subtitle = value;
-                OnPropertyChanged("Subtitle");
+                OnPropertyChanged(nameof(Subtitle));
             }
         }
 
@@ -34,7 +34,7 @@ namespace EmailManager.Models
             set
             {
                 _emailbody = value;
-                OnPropertyChanged("EmailBody");
+                OnPropertyChanged(nameof(EmailBody));
             }
         }
 
@@ -45,7 +45,7 @@ namespace EmailManager.Models
             set
             {
                 _senderemail = value;
-                OnPropertyChanged("SenderEmail");
+                OnPropertyChanged(nameof(SenderEmail));
             }
         }
 
@@ -56,7 +56,7 @@ namespace EmailManager.Models
             set
             {
                 _registrationdate = value;
-                OnPropertyChanged("RegistrationDate");
+                OnPropertyChanged(nameof(RegistrationDate));
             }
         }
 
@@ -67,7 +67,7 @@ namespace EmailManager.Models
             set
             {
                 _tegs = new ObservableCollection<Teg>(value);
-                OnPropertyChanged("Tegs");
+                OnPropertyChanged(nameof(Tegs));
             }
         }
 
@@ -78,7 +78,7 @@ namespace EmailManager.Models
             set
             {
                 _recipients = new ObservableCollection<Recipient>(value);
-                OnPropertyChanged("Recipients");
+                OnPropertyChanged(nameof(Recipients));
             }
         }
 
@@ -95,8 +95,8 @@ namespace EmailManager.Models
 
         private static readonly string[] ValidatedProperties =
         {
-            "SenderEmail",
-            "Recipients"
+            nameof(SenderEmail),
+            nameof(Recipients)
         };
 
         public bool IsValid

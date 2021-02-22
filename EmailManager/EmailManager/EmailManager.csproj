@@ -94,7 +94,6 @@
     <Compile Include="Interfaces\IEmailService.cs" />
     <Compile Include="Interfaces\IMainViewModel.cs" />
     <Compile Include="Interfaces\INavigationService.cs" />
-    <Compile Include="Interfaces\IView.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

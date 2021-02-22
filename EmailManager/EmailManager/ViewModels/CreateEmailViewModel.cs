@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using EmailManager.Helpers;
 using EmailManager.Interfaces;
@@ -16,7 +17,6 @@ namespace EmailManager.ViewModels
         private string _enteredTegText;
         private string _enteredRecipientEmail;
         private Email _email;
-        private bool _isAdded;
 
         private IEmailService EmailService { get;}
         
@@ -25,7 +25,6 @@ namespace EmailManager.ViewModels
         {
             Email = new Email();
             EmailService = emailService;
-            IsAdded = false;
         }
 
         public string EnteredTegText
@@ -57,17 +56,6 @@ namespace EmailManager.ViewModels
                 //check valid
                 OnPropertyChanged(nameof(Email));
             }
-        }
-
-        public bool IsAdded
-        {
-            get => _isAdded;
-            set
-            {
-                _isAdded = value;
-                OnPropertyChanged(nameof(IsAdded));
-            }
-
         }
 
         public RelayCommand DeleteCommand
@@ -157,16 +145,15 @@ namespace EmailManager.ViewModels
                 case Recipient recipient:
                     Email.Recipients?.Remove(recipient);
                     break;
-
             }
         }
 
         private void AddEmail(object obj)
         {
-            if (obj is Email email)
+            if (obj is Email email && email.IsValid)
             {
-                ////save email
-                IsAdded = true;
+                email.RegistrationDate = DateTime.Now;
+                EmailService.AddEmail(email);
                 Email = new Email();
             }
         }

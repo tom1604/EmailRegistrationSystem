@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Reflection;
-using System.Windows.Controls;
 using Autofac;
 using EmailManager.Interfaces;
-using EmailManager.Services;
 
 namespace EmailManager.Integration
 {
@@ -36,7 +34,10 @@ namespace EmailManager.Integration
             var containerBuilder = new ContainerBuilder();
             var dataAccess = Assembly.GetExecutingAssembly();
 
-            containerBuilder.RegisterAssemblyTypes(dataAccess).AsImplementedInterfaces();
+            containerBuilder.RegisterAssemblyTypes(dataAccess)
+                .Where(x => x.Name.EndsWith("Page", StringComparison.InvariantCultureIgnoreCase))
+                .AsSelf()
+                .SingleInstance();
 
             containerBuilder.RegisterAssemblyTypes(dataAccess)
                 .Where(x => x.Name.EndsWith("ViewModel", StringComparison.InvariantCultureIgnoreCase))

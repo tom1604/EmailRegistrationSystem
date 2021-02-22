@@ -155,7 +155,7 @@
                                          BorderThickness="0 0 0 1"
                                          Name="SenderTextBox"
                                          Style="{StaticResource StyleForValidationTextBox}"
-                                         Text="{Binding Path=Email.SenderEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}"/>
+                                         Text="{Binding Email.SenderEmail, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=true}"/>
             <extToolkit:WatermarkTextBox FontSize ="17" 
                                          Watermark ="Subtitle" 
                                          BorderBrush="#FF0F63DC" 

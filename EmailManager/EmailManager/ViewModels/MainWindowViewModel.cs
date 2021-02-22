@@ -7,9 +7,6 @@ namespace EmailManager.ViewModels
 {
     public class MainWindowViewModel : IMainViewModel 
     {
-        private RelayCommand _createEmailCommand;
-        private RelayCommand _searchEmailsCommand;
-
         private INavigationService NavigationService { get; }
 
         public MainWindowViewModel(INavigationService navigationService)
@@ -17,7 +14,7 @@ namespace EmailManager.ViewModels
             NavigationService = navigationService;
         }
 
-        public RelayCommand CreateEmailCommand => _createEmailCommand ?? new RelayCommand(x => NavigationService.Navigate(new CreateEmailPage(), CompositionRoot.Container.Resolve<ICreateEmailViewModel>()));
-        public RelayCommand SearchEmailsCommand => _searchEmailsCommand ?? new RelayCommand(x => NavigationService.Navigate(new SearchEmailsPage()));
+        public RelayCommand CreateEmailCommand => new RelayCommand(x => NavigationService.Navigate(CompositionRoot.Container.Resolve<CreateEmailPage>()));
+        public RelayCommand SearchEmailsCommand => new RelayCommand(x => NavigationService.Navigate(new SearchEmailsPage()));
     }
 }
